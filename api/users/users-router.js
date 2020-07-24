@@ -41,10 +41,17 @@ router.post('/register', async (req, res, next) => {
 	try {
 		const { first_name, last_name, email, username, password, role_id } = req.body;
 		const user = await Users.findBy({ username }).first();
+		const email = await Users.findBy({ email }).first();
 
 		if (user) {
 			return res.status(409).json({
 				message: 'Username is already taken',
+			});
+		}
+
+		if (email) {
+			return res.status(409).json({
+				message: 'Email is already taken',
 			});
 		}
 
