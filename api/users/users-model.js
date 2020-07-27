@@ -13,7 +13,9 @@ module.exports = {
 
 // Returns all user objects
 async function findAll() {
-	return db('users');
+	return db('users').join('roles', 'users.role_id', '=', 'roles.id')
+		.select('users.id as user_id', 'users.first_name', 'users.last_name', 'users.email',
+			'users.username', 'roles.role');
 }
 
 
