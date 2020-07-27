@@ -18,8 +18,8 @@ server.use(express.json());
 
 server.use(logger('long'));
 server.use('/api', welcomeRouter);
-server.use('/users', usersRouter);
-server.use('/classes', classesRouter);
+server.use('/api/users', usersRouter);
+server.use('/api/classes', classesRouter);
 server.use(errorHandler());
 
 server.get('/', (req, res) => {
