@@ -6,7 +6,7 @@
   "scripts": {
     "server": "nodemon -r dotenv/config server.js",
     "test": "cross-env DB_ENV=testing jest --watch",
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "jest": {
     "testEnvironment": "node"
