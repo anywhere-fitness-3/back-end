@@ -68,7 +68,3 @@ typings/
 
 # sqlite db3 files
 *.db3
-
-
-# idea files
-.idea
