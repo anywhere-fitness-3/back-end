@@ -4,7 +4,6 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const logger = require('./middleware/logger')
 
-const welcomeRouter = require('./api/welcome/welcome-router.js');
 const usersRouter = require('./api/users/users-router.js');
 const classesRouter = require('./api/classes/classes-router.js');
 
@@ -16,9 +15,8 @@ server.use(cookieParser());
 server.use(express.json());
 
 server.use(logger('long'));
-server.use('/api', welcomeRouter);
-server.use('/api/users', usersRouter);
-server.use('/api/classes', classesRouter);
+server.use('/users', usersRouter);
+server.use('/classes', classesRouter);
 
 server.get('/', (req, res) => {
 	res.status(200).json({
