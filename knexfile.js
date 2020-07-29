@@ -33,7 +33,7 @@ module.exports = {
     },
   },
   production: {
-    client: 'pg',
+    client: 'sqlite3',
     connection: process.env.DATABASE_URL,
     migrations: {
       directory: './database/migrations',
