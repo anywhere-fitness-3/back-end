@@ -1,14 +1,16 @@
 module.exports = {
-  client: 'sqlite3',
-  connection: {
-    filename: './database/anywhere-fitness.db3'
-  },
-  useNullAsDefault:true,
-  migrations: {
-    directory: './database/migrations'
-  },
-  seeds: {
-    directory: './database/seeds'
+  development: {
+    client: 'sqlite3',
+    connection: {
+      filename: './database/anywhere-fitness.db3',
+    },
+    useNullAsDefault: true,
+    migrations: {
+      directory: './database/migrations',
+    },
+    seeds: {
+      directory: './database/seeds',
+    },
   },
   // needed when using foreign keys
   pool: {
@@ -30,20 +32,4 @@ module.exports = {
       directory: './database/seeds',
     },
   },
-
-  production: {
-    client: 'postgresql',
-    connection: {
-      database: 'anywhere-fitness.db3',
-      user:     'username',
-      password: 'password'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      tableName: 'knex_migrations'
-    }
-  }
 }
