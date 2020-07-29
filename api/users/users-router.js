@@ -2,12 +2,11 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Users = require('./users-model');
-const restrict = require('../../middleware/restrict');
 
 const router = express.Router();
 
 // Retrieve all users
-router.get('/', restrict(0), async (req, res, next) => {
+router.get('/', async (req, res, next) => {
 	try {
 		const users  = await Users.findAll();
 		res.json(users);
