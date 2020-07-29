@@ -24,7 +24,7 @@ router.get('/:id', async (req, res, next) => {
 
 
 // Creates a new class
-router.post('/', async (req, res, next) => {
+router.post('/create', async (req, res, next) => {
 	try {
 		const course = await Classes.add(req.body);
 
