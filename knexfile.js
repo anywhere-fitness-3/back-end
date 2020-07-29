@@ -34,7 +34,7 @@ module.exports = {
   production: {
     client: 'postgresql',
     connection: {
-      database: 'my_db',
+      database: 'anywhere-fitness.db3',
       user:     'username',
       password: 'password'
     },
