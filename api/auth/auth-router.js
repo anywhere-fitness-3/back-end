@@ -1,69 +1,78 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-// const middleware = require('../middleware/middle-ware');
-const Users = require('../users/userModel');
+const Users = require('../users/users-model');
 
 const router = express.Router();
 
-//register (POST) --> for endpoint beginning --> endpoint with /api/auth
-router.post('/register', (req, res) => {
-  //add here
-  const newUser = req.body;
+// Creates a new user in the database
+router.post('/register', async (req, res, next) => {
+	try {
+		const { first_name, last_name, email, username, password, role_id } = req.body;
+		const user = await Users.findBy({ username }).first();
+		const mail = await Users.findBy({ email }).first();
 
-  //create the hash for 'password' using bcrypt
-  const hash = bcrypt.hashSync(newUser.password, 10);
-  newUser.password = hash;
+		if (user) {
+			return res.status(409).json({
+				message: 'Username is already taken',
+			});
+		}
 
-  Users.addUser(newUser)
-    .then(user => {
-      // console.log('inside authRouter addUser', user);
+		if (mail) {
+			return res.status(409).json({
+				message: 'Email is already taken',
+			});
+		}
 
-      const token = signToken(user); //invoke the function and pass in the 'user'
-      res.status(200).json({ user: { id: user.id, username: user.username, email: user.email, role: user.role, token: token, message: `Welcome, ${user.username}. Thanks for registering as an ${user.role} today! ` } });
-    })
-    .catch(error => {
-      console.log('inside authRouter error', error);
-      res.status(500).json({ message: 'Sorry, no new user created on the server', error });
-    });
-});
+		const newUser = await Users.add({
+			first_name,
+			last_name,
+			email,
+			username,
+			password: await bcrypt.hashSync(password, 8),
+			role_id
+		})
 
-//login (POST) --> for endpoint beginning --> endpoing with /api/auth
-router.post('/login', (req, res) => {
-  //add here
-  const { username, password, role } = req.body;
+		res.status(201).json(newUser);
+	} catch(err) {
+		next(err);
+	}
+})
 
-  Users.findBy(username)
-    .then(user => {
-      // console.log('inside user findBy', user);
-      if (user && bcrypt.compareSync(password, user.password)) {
-        // create the token
-        const token = signToken(user); //invoke the function and pass in the 'user'
+// Creates a login session for a user
+router.post('/login', async (req, res, next) => {
+	try {
+		const { username, password } = req.body;
+		const user = await Users.findBy({ username }).first();
 
-        res.status(200).json({ user: { id: user.id, message: `Welcome ${user.username}. Thanks for being an ${user.role} today! `, username: user.username, email: user.email, role: user.role, token: token } });
-      } else {
-        res.status(401).json({ message: 'Sorry, Invalid credentials' });
-      }
-    })
-    .catch(error => {
-      console.log('inside authRouter findBy error', error);
-      res.status(500).json({ message: 'Sorry, login not working on the server', error });
-    });
-});
+		if (!user) {
+			return res.status(401).json({
+				message: 'You shall not pass!',
+			});
+		}
 
-//signToken function here
-function signToken(user) {
-  const payload = {
-    //add any data we want to store in token payload
-    user
-  };
+		const passwordValid = await bcrypt.compareSync(password, user.password);
 
-  const options = {
-    expiresIn: '1d'
-  };
+		if (!passwordValid) {
+			return res.status(401).json({
+				message: 'You shall not pass!',
+			});
+		}
 
-  //return and extract the secret away so it can required and used where needed
-  return jwt.sign(payload, process.env.JWT_SECRET, options);
-}
+		const payload = {
+			id: user.id,
+			username: user.username,
+			role_id: user.role_id,
+		}
+
+		res.cookie('token', jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h'}));
+
+		res.json({
+			message: `Welcome ${user.username}!`,
+		});
+	} catch(err) {
+		next(err);
+	}
+})
 
 module.exports = router;

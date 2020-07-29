@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('./middleware/logger')
 
 const welcomeRouter = require('./api/welcome/welcome-router.js');
-const authRouter = require('.api/auth/auth-router');
+const authRouter = require('./api/auth/auth-router');
 const usersRouter = require('./api/users/users-router.js');
 const classesRouter = require('./api/classes/classes-router.js');
 
