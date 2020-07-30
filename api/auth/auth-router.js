@@ -8,17 +8,8 @@ const router = express.Router();
 // Creates a new user in the database
 router.post('/register', async (req, res, next) => {
 	try {
-		const { first_name, last_name, email, username, password, role_id } = req.body;
-
-		const newUser = await Users.add({
-			first_name,
-			last_name,
-			email,
-			username,
-			password: await bcrypt.hashSync(password, 2),
-			role_id
-		})
-
+		const newUser = req.body;
+		await Users.add(newUser);
 		res.status(201).json(newUser);
 	} catch(err) {
 		next(err);
