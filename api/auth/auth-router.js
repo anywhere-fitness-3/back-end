@@ -46,9 +46,13 @@ router.post('/login', async (req, res, next) => {
 
 		res.cookie('token', jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h'}));
 
-		res.json({
+		const logged = await Users.findById(payload.id);
+
+/*		res.json({
 			message: `Welcome ${user.username}!`,
-		});
+		});*/
+
+		res.status(201).json(logged);
 	} catch(err) {
 		next(err);
 	}
