@@ -5,9 +5,10 @@ const router = express.Router();
 // Retrieve all classes
 router.get('/', async (req, res, next) => {
 	try {
-		const courses  = await Classes.findAll();
-		res.json(courses);
-	} catch (err) {
+		const newClass = req.body;
+		Classes.add(newClass);
+		res.status(201).json(newClass);
+	} catch(err) {
 		next(err);
 	}
 })
