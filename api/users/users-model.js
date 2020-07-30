@@ -41,25 +41,14 @@ function findBy(filter) {
 	return db('users').where(filter);
 }
 
-/* // Adds a user object to the database
+// Adds a user object to the database
 async function add(user) {
-	await db('users').insert(user);
+	const [id] = await db('users').insert(user);
 
-	return db('users').join('roles', 'users.role_id', '=', 'roles.id')
-		.select('users.id as user_id', 'users.first_name', 'users.last_name', 'users.email',
-			'users.username', 'roles.role')
-		.where('users.id').first();
-} */
+	return findById(id);
+}
 
-function add(user) {
-	return db('users')
-	  .insert(user, 'id')
-	  .then(ids => {
-		// console.log(ids);
-		return findById(ids[0]);
-	  });
-  }
-  
+
 
 // Updates a current user with the specified changes
 async function update(id, changes) {
