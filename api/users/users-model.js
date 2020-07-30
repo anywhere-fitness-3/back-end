@@ -15,7 +15,7 @@ module.exports = {
 async function findAll() {
 	return db('users').join('roles', 'users.role_id', '=', 'roles.id')
 		.select('users.id as user_id', 'users.first_name', 'users.last_name', 'users.email',
-			'users.username', 'roles.role');
+			'users.username', 'roles.role').orderBy('users.id');
 }
 
 
