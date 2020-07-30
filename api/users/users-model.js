@@ -49,7 +49,6 @@ async function add(user) {
 }
 
 
-
 // Updates a current user with the specified changes
 async function update(id, changes) {
 	await db('users').where({ id }).update(changes);
