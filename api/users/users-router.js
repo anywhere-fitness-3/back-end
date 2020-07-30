@@ -57,15 +57,5 @@ router.delete('/:id', async (req, res, next) => {
 	}
 })
 
-// Logs user out
-router.get('/logout', async (req, res, next) => {
-	try {
-		res.clearCookie('token');
-		res.send('You have successfully logged out!');
-	} catch (err) {
-		next(err);
-	}
-})
-
 
 module.exports = router;

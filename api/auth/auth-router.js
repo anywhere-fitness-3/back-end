@@ -47,11 +47,24 @@ router.post('/login', async (req, res, next) => {
 		res.cookie('token', jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h'}));
 
 		res.json({
-			message: `Welcome ${payload.username}!`,
+			message: `Welcome ${user.username}!`,
 		});
 	} catch(err) {
 		next(err);
 	}
 })
+
+
+// Logs user out
+router.get('/logout', async (req, res, next) => {
+	try {
+		res.send('You have successfully logged out!');
+		res.clearCookie('token');
+	} catch (err) {
+		next(err);
+	}
+})
+
+
 
 module.exports = router;
