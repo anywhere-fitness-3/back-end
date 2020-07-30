@@ -28,7 +28,7 @@ router.post('/', async (req, res, next) => {
 	try {
 		const course = await Classes.add(req.body);
 
-		res.json(course);
+		res.status(201).json(course);
 	} catch (err) {
 		next(err);
 	}
