@@ -15,15 +15,15 @@ server.use(helmet());
 server.use(cookieParser());
 server.use(express.json());
 
-server.use('/api', welcomeRouter);
-server.use('/api/auth', authRouter);
-server.use('/api/users', usersRouter);
-server.use('/api/classes', classesRouter);
-
 server.get('/', (req, res) => {
 	res.status(200).json({
 		message: 'The API is running!'
 	});
 });
+
+server.use('/api', welcomeRouter);
+server.use('/api/auth', authRouter);
+server.use('/api/users', usersRouter);
+server.use('/api/classes', classesRouter);
 
 module.exports = server;
