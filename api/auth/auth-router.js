@@ -13,13 +13,13 @@ router.post('/register', async (req, res, next) => {
 		const mail = await Users.findBy({ email }).first();
 
 		if (user) {
-			return res.json({
+			return res.status(409).json({
 				message: 'Username is already taken',
 			});
 		}
 
 		if (mail) {
-			return res.json({
+			return res.status(409).json({
 				message: 'Email is already taken',
 			});
 		}
@@ -29,11 +29,11 @@ router.post('/register', async (req, res, next) => {
 			last_name,
 			email,
 			username,
-			password: await bcrypt.hash(password, 8),
+			password: await bcrypt.hashSync(password, 8),
 			role_id
 		})
 
-		res.json(newUser);
+		res.status(201).json(newUser);
 	} catch(err) {
 		next(err);
 	}
@@ -46,7 +46,7 @@ router.post('/login', async (req, res, next) => {
 		const user = await Users.findBy({ username }).first();
 
 		if (!user) {
-			return res.json({
+			return res.status(401).json({
 				message: 'You shall not pass!',
 			});
 		}
@@ -54,7 +54,7 @@ router.post('/login', async (req, res, next) => {
 		const passwordValid = await bcrypt.compareSync(password, user.password);
 
 		if (!passwordValid) {
-			return res.json({
+			return res.status(401).json({
 				message: 'You shall not pass!',
 			});
 		}
