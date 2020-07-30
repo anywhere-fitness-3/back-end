@@ -11,7 +11,7 @@ router.post('/register', async (req, res, next) => {
 
 		const newUser = req.body;
 
-		Users.add(newUser);
+		await Users.add(newUser);
 		res.status(201).json(newUser);
 	} catch(err) {
 		next(err);
@@ -30,7 +30,7 @@ router.post('/login', async (req, res, next) => {
 			});
 		}
 
-		const passwordValid = await bcrypt.compare(password, user.password);
+		const passwordValid = await bcrypt.compareSync(password, user.password);
 
 		if (!passwordValid) {
 			return res.status(401).json({
@@ -54,7 +54,6 @@ router.post('/login', async (req, res, next) => {
 	}
 })
 
-
 // Logs user out
 router.get('/logout', async (req, res, next) => {
 	try {
@@ -64,7 +63,5 @@ router.get('/logout', async (req, res, next) => {
 		next(err);
 	}
 })
-
-
 
 module.exports = router;
