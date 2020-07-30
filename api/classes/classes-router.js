@@ -22,7 +22,6 @@ router.get('/:id', async (req, res, next) => {
 	}
 });
 
-
 // Creates a new class
 router.post('/', async (req, res, next) => {
 	try {
@@ -33,7 +32,6 @@ router.post('/', async (req, res, next) => {
 		next(err);
 	}
 })
-
 
 // Updates a current class with the specified id
 router.put('/:id', async (req, res, next) => {
