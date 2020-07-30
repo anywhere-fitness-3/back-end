@@ -8,31 +8,10 @@ const router = express.Router();
 // Creates a new user in the database
 router.post('/register', async (req, res, next) => {
 	try {
-		const { first_name, last_name, email, username, password, role_id } = req.body;
-		const user = await Users.findBy({ username }).first();
-		const mail = await Users.findBy({ email }).first();
 
-		if (user) {
-			return res.status(409).json({
-				message: 'Username is already taken',
-			});
-		}
+		const newUser = req.body;
 
-		if (mail) {
-			return res.status(409).json({
-				message: 'Email is already taken',
-			});
-		}
-
-		const newUser = await Users.add({
-			first_name,
-			last_name,
-			email,
-			username,
-			password,
-			role_id
-		})
-
+		Users.add(newUser);
 		res.status(201).json(newUser);
 	} catch(err) {
 		next(err);
