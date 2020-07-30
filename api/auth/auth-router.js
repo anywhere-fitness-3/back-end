@@ -10,7 +10,7 @@ router.post('/register', async (req, res, next) => {
 	try {
 		const newUser = req.body;
 		await Users.add(newUser);
-		res.status(201).json(newUser.username);
+		res.status(201).json(req.body);
 	} catch(err) {
 		next(err);
 	}
