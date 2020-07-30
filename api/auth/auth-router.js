@@ -1,20 +1,43 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const db = require('../../database/dbConfig');
 const Users = require('../users/users-model');
 
 const router = express.Router();
 
-router.post('/', (req, res, next) => {
-	// do your magic!
-	db.insert(req.body)
-		  .then((user) => {
-			  return res.status(201).json(user)
-		  })
-		  .catch(next)
-  });
-  
+// Creates a new user in the database
+router.post('/register', async (req, res, next) => {
+	try {
+		const { first_name, last_name, email, username, password, role_id } = req.body;
+		const user = await Users.findBy({ username }).first();
+		const mail = await Users.findBy({ email }).first();
+
+		if (user) {
+			return res.json({
+				message: 'Username is already taken',
+			});
+		}
+
+		if (mail) {
+			return res.json({
+				message: 'Email is already taken',
+			});
+		}
+
+		const newUser = await Users.add({
+			first_name,
+			last_name,
+			email,
+			username,
+			password: await bcrypt.hashSync(password, 8),
+			role_id
+		})
+
+		res.json(newUser);
+	} catch(err) {
+		next(err);
+	}
+})
 
 // Creates a login session for a user
 router.post('/login', async (req, res, next) => {
