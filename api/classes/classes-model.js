@@ -15,7 +15,7 @@ async function findAll() {
 		.join('types', 'classes.type_id', '=', 'types.id')
 		.select('classes.id as class_id', 'name', 'instructor_id', 'users.username as instructor_username',
 			'types.type', 'date', 'start_time', 'duration', 'intensity', 'location',
-			'number_of_attendees', 'max_class_size');
+			'number_of_attendees', 'max_class_size').orderBy('classes.id');
 }
 
 // Returns a class with the specified id
