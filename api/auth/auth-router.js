@@ -8,10 +8,17 @@ const router = express.Router();
 // Creates a new user in the database
 router.post('/register', async (req, res, next) => {
 	try {
+		const { first_name, last_name, email, username, password, role_id } = req.body;
 
-		const newUser = req.body;
+		const newUser = await Users.add({
+			first_name,
+			last_name,
+			email,
+			username,
+			password: await bcrypt.hashSync(password, 2),
+			role_id
+		})
 
-		await Users.add(newUser);
 		res.status(201).json(newUser);
 	} catch(err) {
 		next(err);
@@ -46,13 +53,10 @@ router.post('/login', async (req, res, next) => {
 
 		res.cookie('token', jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h'}));
 
-		const logged = await Users.findById(payload.id);
-
-/*		res.json({
+		res.json({
 			message: `Welcome ${user.username}!`,
-		});*/
+		});
 
-		res.status(201).json(logged);
 	} catch(err) {
 		next(err);
 	}
