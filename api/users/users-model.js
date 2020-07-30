@@ -48,7 +48,7 @@ async function add(user) {
 	return db('users').join('roles', 'users.role_id', '=', 'roles.id')
 		.select('users.id as user_id', 'users.first_name', 'users.last_name', 'users.email',
 			'users.username', 'roles.role')
-		.where('users.id', {id}).first();
+		.where('users.id', id).first();
 }
 
 // Updates a current user with the specified changes
