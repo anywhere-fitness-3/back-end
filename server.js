@@ -12,7 +12,10 @@ const classesRouter = require('./api/classes/classes-router.js');
 
 const server = express();
 
-server.use(cors());
+const origin =
+  process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://front-end-3l69ehntk.vercel.app';
+
+server.use(cors({ credentials: true, origin }));
 server.use(helmet());
 server.use(cookieParser());
 server.use(express.json());
