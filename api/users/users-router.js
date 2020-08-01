@@ -4,7 +4,7 @@ const router = express.Router();
 const restrict = require('../../middleware/restrict');
 
 // Retrieve all users
-router.get('/', restrict(1), async (req, res, next) => {
+router.get('/', restrict(0), async (req, res, next) => {
 	try {
 		const users  = await Users.findAll();
 		res.json(users);
