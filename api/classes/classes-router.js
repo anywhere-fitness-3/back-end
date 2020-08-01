@@ -1,6 +1,7 @@
 const express = require('express');
 const Classes = require('./classes-model');
 const router = express.Router();
+const restrict = require('../../middleware/restrict');
 
 // Retrieve all classes
 router.get('/', async (req, res, next) => {
