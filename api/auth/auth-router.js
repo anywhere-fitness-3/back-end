@@ -25,16 +25,15 @@ router.post('/register', async (req, res, next) => {
 			});
 		}
 
-		const newUser = await Users.add({
+		req.body.password = await bcrypt.hashSync(password, 14);
+
+		res.status(201).json({
 			first_name,
 			last_name,
 			email,
 			username,
-			password: await bcrypt.hashSync(password, 8),
 			role_id
-		})
-
-		res.status(201).json(newUser);
+		});
 	} catch(err) {
 		next(err);
 	}
