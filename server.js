@@ -5,6 +5,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 
+const app = express();
+
 const welcomeRouter = require('./api/welcome/welcome-router.js');
 const authRouter = require('./api/auth/auth-router');
 const usersRouter = require('./api/users/users-router.js');
@@ -14,7 +16,9 @@ const server = express();
 
 server.use(cors());
 
-server.use(function(req, res, next) {
+app.options('*', cors());
+
+app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	next();
