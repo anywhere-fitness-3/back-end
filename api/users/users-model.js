@@ -43,13 +43,7 @@ function findBy(filter) {
 
 // Adds a user object to the database
 async function add(user) {
-	const [id] = await db('users').insert(user);
-
-	return db('users').join('roles', 'users.role_id', '=', 'roles.id')
-		.select('users.id as user_id', 'users.first_name', 'users.last_name', 'users.email',
-			'users.username', 'roles.role')
-		.where('users.id', id)
-		.first();
+	await db('users').insert(user);
 }
 
 
