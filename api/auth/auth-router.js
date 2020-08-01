@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-require("dotenv").config();
+const JWT_SECRET = "wib! FtZS I6Ik pvaG*";
 const Users = require('../users/users-model');
 
 const router = express.Router();
@@ -66,7 +66,7 @@ router.post('/login', async (req, res, next) => {
 			role_id: user.role_id,
 		}
 
-		res.cookie('token', jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h'}));
+		res.cookie('token', jwt.sign(payload, JWT_SECRET,{ expiresIn: '1h'}));
 
 		res.json({
 			message: `Welcome ${user.username}!`,
