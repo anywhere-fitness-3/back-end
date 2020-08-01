@@ -32,15 +32,7 @@ async function findById(id) {
 
 // Adds a user object to the database
 async function add(course) {
-	const [id] = await db('classes').insert(course);
-
-	return db('classes').join('users', 'classes.instructor_id', '=', 'users.id')
-		.join('types', 'classes.type_id', '=', 'types.id')
-		.select('classes.id as class_id', 'name', 'instructor_id', 'users.username as instructor_username',
-			'types.type', 'date', 'start_time', 'duration', 'intensity', 'location',
-			'number_of_attendees', 'max_class_size')
-		.where('classes.id', id)
-		.first();
+	await db('classes').insert(course);
 }
 
 
