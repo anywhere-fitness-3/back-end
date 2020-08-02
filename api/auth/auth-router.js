@@ -24,20 +24,20 @@ router.post('/register', async (req, res, next) => {
 			});
 		}
 
-		req.body.password = await bcrypt.hashSync(password, 14);
-
-		res.status(201).json({
+		const newUser = await Users.add({
 			first_name,
 			last_name,
 			email,
 			username,
+			password: await bcrypt.hashSync(password, 14),
 			role_id
-		});
+		})
+
+		res.status(201).json(newUser);
 	} catch(err) {
 		next(err);
 	}
 })
-
 // Creates a login session for a user
 router.post('/login', async (req, res, next) => {
 	try {
