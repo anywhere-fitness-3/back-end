@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = "this is a secret";
+const secret = require('../../config/secrets');
 const Users = require('../users/users-model');
 
 const router = express.Router();
@@ -65,7 +65,7 @@ router.post('/login', async (req, res, next) => {
 			role_id: user.role_id,
 		}
 
-		res.cookie('token', jwt.sign(payload, JWT_SECRET,{ expiresIn: '1h'}));
+		res.cookie('token', jwt.sign(payload, secret.jwtSecret,{ expiresIn: '1h'}));
 
 		res.json({
 			message: `Welcome ${user.username}!`,
