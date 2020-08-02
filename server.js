@@ -20,12 +20,12 @@ server.use(helmet());
 server.use(cookieParser());
 server.use(express.json());
 
-server.all('/', function(req, res, next) {
+/* server.all('/', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next()
 }); 
-
+ */
 server.use('/api', welcomeRouter);
 server.use('/api/auth', authRouter);
 server.use('/api/users', usersRouter);
