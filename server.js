@@ -11,18 +11,9 @@ const authRouter = require('./api/auth/auth-router');
 const usersRouter = require('./api/users/users-router.js');
 const classesRouter = require('./api/classes/classes-router.js');
 
-server.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  if (req.method === 'OPTIONS') {
-      res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
-      return res.status(200).json({});
-  }
-  return next();
-});
+const origin = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://front-end-3l69ehntk.vercel.app';
+
+server.use(cors({ credentials: true, origin }));
 
 server.use(helmet());
 server.use(cookieParser());
