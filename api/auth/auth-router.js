@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Users = require('../users/users-model');
+const secret = require('../../config/secrets');
 
 const router = express.Router();
 
@@ -64,7 +65,7 @@ router.post('/login', async (req, res, next) => {
 			role_id: user.role_id,
 		}
 
-		res.cookie('token', jwt.sign(payload, process.env.JWT_SECRET,{ expiresIn: '1h'}));
+		res.cookie('token', jwt.sign(payload, secret.jwtSecret, { expiresIn: '1h'}));
 
 		res.json({
 			message: `Welcome ${user.username}!`,

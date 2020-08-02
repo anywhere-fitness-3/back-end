@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const secret = require('../config/secrets');
 
 const roles = [
 	2, // client role_id
@@ -17,7 +18,7 @@ function restrict(role) {
 				return res.status(401).json(authError);
 			}
 
-			jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+			jwt.verify(token, secret.jwtSecret, (err, decoded) => {
 				if (err) {
 					return res.status(401).json(authError);
 				}
