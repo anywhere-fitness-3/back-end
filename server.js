@@ -12,7 +12,7 @@ const usersRouter = require('./api/users/users-router.js');
 const classesRouter = require('./api/classes/classes-router.js');
 
 const origin =
-  process.env.NODE_ENV === 'production' ? 'http://localhost:3000' : 'https://front-end-3l69ehntk.vercel.app';
+  process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://front-end-3l69ehntk.vercel.app';
 
 server.use(cors({ credentials: true, origin }));
 

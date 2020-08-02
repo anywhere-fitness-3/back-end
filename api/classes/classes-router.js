@@ -4,7 +4,7 @@ const router = express.Router();
 const restrict = require('../../middleware/restrict');
 
 // Retrieve all classes
-router.get('/', async (req, res, next) => {
+router.get('/', restrict(2), async (req, res, next) => {
 	try {
 		const courses  = await Classes.findAll();
 		res.json(courses);
