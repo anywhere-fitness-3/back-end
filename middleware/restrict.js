@@ -1,9 +1,8 @@
 const jwt = require('jsonwebtoken');
 
 const roles = [
-	0,
-	1,
-	2
+	2, // client role_id
+	1 // instructor role_id
 ]
 
 function restrict(role) {
