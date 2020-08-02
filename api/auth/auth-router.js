@@ -65,7 +65,7 @@ router.post('/login', async (req, res, next) => {
 			role_id: user.role_id,
 		}
 
-		res.cookie('token', jwt.sign(payload, secret.jwtSecret,{ expiresIn: '1h'}));
+		res.cookie('token', jwt.sign(payload, secret.jwtSecret));
 
 		res.json({
 			message: `Welcome ${user.username}!`,
@@ -79,8 +79,8 @@ router.post('/login', async (req, res, next) => {
 // Logs user out
 router.get('/logout', async (req, res, next) => {
 	try {
-		res.clearCookie('token');
 		res.send('You have successfully logged out!');
+		res.clearCookie('token');
 	} catch (err) {
 		next(err);
 	}
