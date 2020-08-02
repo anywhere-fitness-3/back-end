@@ -13,11 +13,6 @@ const classesRouter = require('./api/classes/classes-router.js');
 
 server.use(cors());
 
-server.use((req, res) => {
-	res.header("Access-Control-Allow-Origin", "https://anywhere-fitness-3.herokuapp.com/");
-	res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-})
-
 server.use(helmet());
 server.use(cookieParser());
 server.use(express.json());
