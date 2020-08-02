@@ -4,7 +4,7 @@ const router = express.Router();
 const restrict = require('../../middleware/restrict');
 
 // Retrieve all users
-router.get('/', restrict(0), async (req, res, next) => {
+router.get('/', restrict(1), async (req, res, next) => {
 	try {
 		const users  = await Users.findAll();
 		res.json(users);
@@ -14,7 +14,7 @@ router.get('/', restrict(0), async (req, res, next) => {
 })
 
 // Retrieves an user with the specified id
-router.get('/:id',  restrict(2), async (req, res, next) => {
+router.get('/:id', restrict(2), async (req, res, next) => {
 	try {
 		const user  = await Users.findById(req.params.id);
 		res.json(user);
@@ -34,7 +34,7 @@ router.get('/roles/:role_id', restrict(1), async (req, res, next) => {
 })
 
 // Updates a current user with the specified id
-router.put('/:id',  restrict(2), async (req, res, next) => {
+router.put('/:id', restrict(2), async (req, res, next) => {
 	try {
 		const user = await Users.update(req.params.id, req.body);
 		res.json(user);
@@ -52,6 +52,16 @@ router.delete('/:id', restrict(2), async (req, res, next) => {
 		res.json(users);
 	} catch (err) {
 		next(err)
+	}
+})
+
+// Logs user out
+router.get('/logout', async (req, res, next) => {
+	try {
+		res.clearCookie('token');
+		res.send('You have successfully logged out!');
+	} catch (err) {
+		next(err);
 	}
 })
 

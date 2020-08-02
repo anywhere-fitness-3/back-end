@@ -11,17 +11,12 @@ const authRouter = require('./api/auth/auth-router');
 const usersRouter = require('./api/users/users-router.js');
 const classesRouter = require('./api/classes/classes-router.js');
 
-
-
 server.use(cors());
 
-server.options('*', cors());
-
-server.use(function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	next();
-});
+server.use((req, res) => {
+	res.header("Access-Control-Allow-Origin", "https://anywhere-fitness-3.herokuapp.com/");
+	res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+})
 
 server.use(helmet());
 server.use(cookieParser());
