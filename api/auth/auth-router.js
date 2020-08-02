@@ -62,7 +62,7 @@ router.post('/login', async (req, res, next) => {
 		const payload = {
 			id: user.id,
 			username: user.username,
-			role_id: user.role_id,
+			role_id: 1,
 		}
 
 		res.cookie('token', jwt.sign(payload, secret.jwtSecret));
