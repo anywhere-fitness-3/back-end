@@ -1,7 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const secret = require('../../config/secrets');
 const Users = require('../users/users-model');
 
 const router = express.Router();
@@ -62,10 +61,10 @@ router.post('/login', async (req, res, next) => {
 		const payload = {
 			id: user.id,
 			username: user.username,
-			role_id: 1,
+			role_id: user.role_id,
 		}
 
-		res.cookie('token', jwt.sign(payload, secret.jwtSecret));
+		res.cookie('token', jwt.sign(payload, process.env.JWT_SECRET,{ expiresIn: '1h'}));
 
 		res.json({
 			message: `Welcome ${user.username}!`,
@@ -79,8 +78,8 @@ router.post('/login', async (req, res, next) => {
 // Logs user out
 router.get('/logout', async (req, res, next) => {
 	try {
-		res.send('You have successfully logged out!');
 		res.clearCookie('token');
+		res.send('You have successfully logged out!');
 	} catch (err) {
 		next(err);
 	}
