@@ -4,7 +4,7 @@ const router = express.Router();
 const restrict = require('../../middleware/restrict');
 
 // Retrieve all classes
-router.get('/', restrict(2), async (req, res, next) => {
+router.get('/', restrict(0), async (req, res, next) => {
 	try {
 		const courses  = await Classes.findAll();
 		res.json(courses);
@@ -14,7 +14,7 @@ router.get('/', restrict(2), async (req, res, next) => {
 })
 
 // Retrieves a class with the specified id
-router.get('/:id', restrict(2), async (req, res, next) => {
+router.get('/:id', restrict(0), async (req, res, next) => {
 	try {
 		const course = await Classes.findById(req.params.id);
 		res.json(course);
@@ -24,7 +24,7 @@ router.get('/:id', restrict(2), async (req, res, next) => {
 });
 
 // Creates a new class
-router.post('/', restrict(1), async (req, res, next) => {
+router.post('/', restrict(0), async (req, res, next) => {
 	try {
 		const newClass = req.body;
 		await Classes.add(newClass);
@@ -35,7 +35,7 @@ router.post('/', restrict(1), async (req, res, next) => {
 })
 
 // Updates a current class with the specified id
-router.put('/:id', restrict(1), async (req, res, next) => {
+router.put('/:id', restrict(0), async (req, res, next) => {
 	try {
 		const course = await Classes.update(req.params.id, req.body);
 		res.json(course);
@@ -45,7 +45,7 @@ router.put('/:id', restrict(1), async (req, res, next) => {
 });
 
 // Deletes a class and returns the updated list of classes
-router.delete('/:id', restrict(1), async (req, res, next) => {
+router.delete('/:id', restrict(0), async (req, res, next) => {
 	try {
 		await Classes.remove(req.params.id);
 		const courses  = await Classes.findAll();
