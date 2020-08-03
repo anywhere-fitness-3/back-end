@@ -55,9 +55,9 @@ https://anywhere-fitness-3.herokuapp.com/
 | name | text | yes | yes | class name |
 | instructor_id | integer | yes | no | foreign key for instructor of class |
 | type_id | integer | yes | no | foreign key for type of class |
-| date | text | yes | yes | user email |
-| start_time | text | yes | yes | username of user |
-| duration | text | yes | no | user password |
+| date | date | yes | no | date of class |
+| start_time | time | yes | no | start time of class |
+| duration | integer | yes | no | duration of class |
 | intensity | text | yes | no | intensity of class |
 | location | text | yes | no | location of class |
 | number_of_attendees | integer | yes | no | number of client in class |
@@ -67,8 +67,8 @@ https://anywhere-fitness-3.herokuapp.com/
 | Name | Type | Required | Unique | Notes |
 | ---- | ---- | -------- | ------ | ----- |
 | id | integer | yes | yes | role id (incremented) |
-| class_id | integer | yes | yes | foreign key from classes table |
-| client_id | integer | yes | yes | foreign key from users table |
+| class_id | integer | yes | no | foreign key from classes table |
+| client_id | integer | yes | no | foreign key from users table |
 
 
 
