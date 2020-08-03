@@ -2,7 +2,7 @@
 # Back-end for Anywhere-Fitness-3
 
 ## Base URL for API 
-https://anywhere-fitness-3.herokuapp.com/
+https://anywhere-fitness-3b.herokuapp.com/
 
 
 ## Endpoints
