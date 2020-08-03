@@ -3,7 +3,7 @@ const Classes = require('./classes-model');
 const router = express.Router();
 const restrict = require('../../middleware/restrict');
 
-// Retrieve all classes
+// Retrieves all classes
 router.get('/', restrict(2), async (req, res, next) => {
 	try {
 		const courses  = await Classes.findAll();
@@ -23,7 +23,7 @@ router.get('/:id', restrict(2), async (req, res, next) => {
 	}
 });
 
-// Creates a new class
+// Creates a new class (restricted to instructors)
 router.post('/', restrict(1), async (req, res, next) => {
 	try {
 		const newClass = req.body;
@@ -34,7 +34,7 @@ router.post('/', restrict(1), async (req, res, next) => {
 	}
 })
 
-// Updates a current class with the specified id
+// Updates a current class with the specified id (restricted to instructors)
 router.put('/:id', restrict(1), async (req, res, next) => {
 	try {
 		const course = await Classes.update(req.params.id, req.body);
@@ -44,7 +44,7 @@ router.put('/:id', restrict(1), async (req, res, next) => {
 	}
 });
 
-// Deletes a class and returns the updated list of classes
+// Deletes a class and returns the updated list of classes (restricted to instructors)
 router.delete('/:id', restrict(1), async (req, res, next) => {
 	try {
 		await Classes.remove(req.params.id);

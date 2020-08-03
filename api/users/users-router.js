@@ -3,7 +3,7 @@ const Users = require('./users-model');
 const router = express.Router();
 const restrict = require('../../middleware/restrict');
 
-// Retrieve all users
+// Retrieve all users (restricted to instructors)
 router.get('/', restrict(1), async (req, res, next) => {
 	try {
 		const users  = await Users.findAll();
@@ -13,7 +13,7 @@ router.get('/', restrict(1), async (req, res, next) => {
 	}
 })
 
-// Retrieves an user with the specified id
+// Retrieves a user with the specified id
 router.get('/:id', restrict(2), async (req, res, next) => {
 	try {
 		const user  = await Users.findById(req.params.id);
@@ -23,7 +23,7 @@ router.get('/:id', restrict(2), async (req, res, next) => {
 	}
 });
 
-// Retrieves users with the specified role
+// Retrieves users with the specified role (restricted to instructors)
 router.get('/roles/:role_id', restrict(1), async (req, res, next) => {
 	try {
 		const users  = await Users.findByRole(req.params.role_id);
